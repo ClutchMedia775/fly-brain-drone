@@ -1,0 +1,391 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Fly Brain Drone — a fruit fly's connectome pilots a quadcopter</title>
+  <meta name="description" content="The complete wiring diagram of a fruit fly brain, simulated neuron by neuron and wired to a virtual quadcopter. It dodges obstacles and holds its heading with zero training. Interactive results, brain maps and animations.">
+  <meta property="og:title" content="A Fruit Fly's Brain Flies a Drone">
+  <meta property="og:description" content="139k neurons, 54 million synapses, zero parameters trained. Watch the real FlyWire connectome steer a simulated quadcopter away from a looming threat.">
+  <meta property="og:type" content="website">
+  <meta property="og:image" content="img/og.png">
+  <meta name="theme-color" content="#0b0b0b">
+  <link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 32 32'%3E%3Ccircle cx='16' cy='16' r='14' fill='%230b0b0b'/%3E%3Ccircle cx='16' cy='16' r='6' fill='%23e63946'/%3E%3C/svg%3E">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Bebas+Neue&family=Inter:wght@400;500;600&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+<nav class="nav">
+  <a class="brand" href="#top">FLY // DRONE</a>
+  <ul>
+    <li><a class="link" href="#idea">Idea</a></li>
+    <li><a class="link" href="#pipeline">How</a></li>
+    <li><a class="link" href="#map">Brain map</a></li>
+    <li><a class="link" href="#exp1">Left vs right</a></li>
+    <li><a class="link" href="#exp2">Dodge</a></li>
+    <li><a class="link" href="#exp3">Heading</a></li>
+    <li><a class="link" href="#control">Control</a></li>
+    <li><a class="link" href="#meaning">Meaning</a></li>
+    <li><a class="link" href="#sources">Sources</a></li>
+  </ul>
+</nav>
+
+<!-- ===================== HERO ===================== -->
+<header class="hero" id="top">
+  <div class="stage">
+    <canvas id="hero-bg"></canvas>
+    <canvas id="hero-fx"></canvas>
+    <div class="scrim"></div>
+  </div>
+  <div class="legend-live" aria-hidden="true">
+    <span style="--dot:#2e9fbf">eye neurons</span>
+    <span style="--dot:#ffffff">brain neurons</span>
+    <span style="--dot:#e63946">command neurons</span>
+  </div>
+  <div class="content">
+    <p class="label" style="margin-bottom:1rem">Live replay · the real fly connectome seeing an object rush toward it</p>
+    <h1><span><i>A FRUIT FLY'S BRAIN</i></span><span><i>FLIES A DRONE.</i></span></h1>
+    <p class="sub">We took the complete wiring diagram of a fruit fly's brain, ran it as a spiking neural network, connected its eyes to a virtual camera and its command neurons to a quadcopter. Nobody trained it. It dodged.</p>
+    <div class="stats">
+      <div class="stat"><b data-fill="n_neurons">138,639</b><span class="label">neurons simulated</span></div>
+      <div class="stat"><b data-fill="n_synapses">54.5M</b><span class="label">synapses in the wiring</span></div>
+      <div class="stat"><b>0</b><span class="label">parameters trained</span></div>
+      <div class="stat"><b data-fill="evade_ratio">6 / 6</b><span class="label">threats evaded with the real wiring</span></div>
+    </div>
+  </div>
+  <div class="scroll-cue">Scroll</div>
+</header>
+
+<!-- ===================== IDEA ===================== -->
+<section class="block" id="idea">
+  <div class="wrap">
+    <div class="grid-2">
+      <div class="reveal">
+        <div class="eyebrow"><span class="label">01 · The idea</span></div>
+        <h2 class="title">The smallest brain we have completely mapped</h2>
+      </div>
+      <div class="prose reveal">
+        <p class="lede">In 2024 the FlyWire consortium finished something no one had done for an animal with a real brain: they traced every neuron and every synapse in an adult fruit fly, from electron-microscope images sliced 40 nanometres thin.</p>
+        <p>A second team then turned that wiring diagram into a working simulation. Each neuron is a tiny "leaky integrate-and-fire" unit: it collects charge from its inputs, leaks a little, and fires when it crosses a threshold. The rules are simple and identical for every cell. The only thing that makes one fly brain different from a random network of the same size is <em>which neuron is wired to which</em>.</p>
+        <p>That raised a question we could actually test. A fruit fly avoids collisions and holds a steady heading using visual circuits that neuroscientists have studied for decades. If the wiring diagram really captures those circuits, then feeding a simulated threat into the fly's looming detectors should produce a steering signal in its command neurons, on the correct side, with no learning at all. We gave that signal to a quadcopter and watched.</p>
+      </div>
+    </div>
+    <div class="grid-3 reveal">
+      <div class="cell"><div class="num">1</div><h3>Eyes</h3><p>A virtual object approaches. Its growth on the retina is converted into spikes in the fly's own looming-detector neurons, LPLC2 and LC4, on the side of the eye that sees it.</p></div>
+      <div class="cell"><div class="num">2</div><h3>Brain</h3><p>The full FlyWire connectome runs untouched: 139 thousand neurons, 54 million synapses, every connection at its measured strength and sign. Whatever it does with the input, it does on its own.</p></div>
+      <div class="cell"><div class="num">3</div><h3>Wings</h3><p>Descending neurons carry commands from brain to body. We read the ones flies use to steer and escape, and map them to roll, yaw and thrust setpoints on a simulated drone.</p></div>
+    </div>
+  </div>
+</section>
+
+<!-- ===================== PIPELINE ===================== -->
+<section class="block" id="pipeline">
+  <div class="wrap">
+    <div class="eyebrow"><span class="label">02 · How it works</span></div>
+    <h2 class="title">Real biology in the middle, honest engineering at the edges</h2>
+    <p class="lede">Three parts run in lockstep, twenty milliseconds at a time. The parts marked <span class="tag real">real</span> come straight from the fly. The parts marked <span class="tag eng">engineered</span> are ours, and we say exactly what they do.</p>
+    <div class="panel reveal" style="margin-top:2rem">
+      <div class="body"><div id="pipeline-svg"></div></div>
+      <div class="figcap">Every 20 ms the retina model sets firing rates on ~6,400 visual neurons, the connectome simulation advances, spike counts are read from 1,299 descending neurons, and a linear read-out turns eight of them into setpoints for a standard attitude autopilot. The autopilot plays the role of the fly's ventral nerve cord, which is not part of the brain dataset.</div>
+    </div>
+    <div class="grid-3 reveal">
+      <div class="cell"><span class="tag eng">engineered</span><h3 style="margin-top:.6rem">Retina</h3><p>Geometry, not pixels. The object's angular size and expansion rate drive LPLC2 and LC4 in proportion, weighted toward the eye that sees it. Self-rotation drives the T4 and T5 motion detectors by direction. No neuron gets a signal it could not get in life.</p></div>
+      <div class="cell"><span class="tag real">real · untouched</span><h3 style="margin-top:.6rem">Connectome</h3><p>The Shiu et al. (2024) leaky integrate-and-fire model on FlyWire release 783. One synaptic weight for the whole brain, scaled by synapse count; excitatory or inhibitory by predicted neurotransmitter. We changed nothing.</p></div>
+      <div class="cell"><span class="tag eng">engineered</span><h3 style="margin-top:.6rem">Bridge + autopilot</h3><p>Steering neurons DNa02, DNa01 and DNb01 push the drone toward their own side; wing-amplitude neurons DNg02 and saccade neurons DNp03 / DNp11 push it away. The giant fiber triggers a climb. Signs come from fly physiology; only the gains are ours.</p></div>
+    </div>
+  </div>
+</section>
+
+<!-- ===================== BRAIN MAP ===================== -->
+<section class="block" id="map">
+  <div class="wrap">
+    <div class="eyebrow"><span class="label">03 · Brain map</span></div>
+    <h2 class="title">Where the circuit lives</h2>
+    <p class="lede">Every dot is one real neuron at its measured position, viewed from the front. The two large lobes are the optic lobes behind each eye. Toggle the cell types the experiment touches.</p>
+    <div class="panel reveal" style="margin-top:2rem">
+      <div class="head">
+        <span class="t">FlyWire v783 · frontal view</span>
+        <div class="controls" id="map-chips"></div>
+      </div>
+      <div class="body" style="padding:0"><canvas id="map-canvas"></canvas></div>
+      <div class="figcap" id="map-cap">Looming detectors LPLC2 and LC4 sit at the outer edge of each optic lobe. Descending neurons cluster at the bottom centre where the brain narrows into the neck. The giant fiber, one neuron per side, is the largest cell in the fly and the fastest route from eye to escape.</div>
+    </div>
+  </div>
+</section>
+
+<!-- ===================== EXPERIMENT 1 ===================== -->
+<section class="block" id="exp1">
+  <div class="wrap">
+    <div class="grid-2">
+      <div class="reveal">
+        <div class="eyebrow"><span class="label">04 · Experiment 1</span></div>
+        <h2 class="title">Does the wiring know left from right?</h2>
+        <div class="prose" style="margin-top:1.4rem">
+          <p>Before flying anything we asked the simplest question. Stimulate the looming detectors on <em>one</em> side only, and record every descending neuron. If the connectome carries a real steering circuit, the response should be lopsided, and lopsided in the direction a fly would turn.</p>
+          <p>It was. A threat on the left lit up the steering neurons DNa02, DNa01 and DNb01 <strong>only on the right</strong>, and the saccade neurons DNp03 and DNp11 <strong>only on the left</strong>. In a fly, both patterns mean the same thing: turn right, away from the threat. The giant fiber fired on both sides, as expected for an escape reflex.</p>
+          <p>Baseline activity, with no input at all, was exactly zero spikes. Everything shown here is caused by the stimulus.</p>
+        </div>
+        <div class="stats" style="animation:none;opacity:1;margin-top:1.6rem;max-width:none">
+          <div class="stat"><b data-fill="p1_dn_left">92</b><span class="label">command neurons recruited by left-eye looming</span></div>
+          <div class="stat"><b data-fill="p1_dn_total">1,299</b><span class="label">command neurons monitored</span></div>
+        </div>
+      </div>
+      <div class="panel reveal">
+        <div class="head">
+          <span class="t">Descending-neuron firing rate, Hz</span>
+          <div class="seg" id="exp1-seg" role="group" aria-label="stimulus">
+            <button aria-pressed="true" data-exp="LPLC2_L">LPLC2 left</button>
+            <button aria-pressed="false" data-exp="LC4_L">LC4 left</button>
+            <button aria-pressed="false" data-exp="LPLC2_R">LPLC2 right</button>
+            <button aria-pressed="false" data-exp="LC4_R">LC4 right</button>
+          </div>
+        </div>
+        <div class="body">
+          <div class="legend" style="margin-bottom:.6rem"><span style="--dot:#2e9fbf">left-side neuron</span><span style="--dot:#d4652f">right-side neuron</span></div>
+          <div id="exp1-chart"></div>
+        </div>
+        <div class="figcap">Mean of 4 one-second trials, Poisson drive at 150 Hz on the named detector population of one eye. Bars extend left for the left copy of each neuron type and right for the right copy. Notice the mirror image when the stimulus switches sides.</div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ===================== EXPERIMENT 2 ===================== -->
+<section class="block" id="exp2">
+  <div class="wrap">
+    <div class="eyebrow"><span class="label">05 · Experiment 2</span></div>
+    <h2 class="title">Dodge the ball</h2>
+    <p class="lede">A 30 cm sphere flies straight at the hovering drone at 2 m/s from the left, the right, or dead ahead. With no brain the drone just hovers and gets hit. With the fly brain it banks away every time. Press play, or drag the slider.</p>
+
+    <div class="panel reveal" style="margin-top:2rem">
+      <div class="head">
+        <div class="controls">
+          <div class="seg" id="lab-cond" role="group" aria-label="brain condition">
+            <button aria-pressed="true" data-cond="real">Fly brain</button>
+            <button aria-pressed="false" data-cond="nobrain">No brain</button>
+            <button aria-pressed="false" data-cond="shuffle1">Shuffled wiring</button>
+          </div>
+          <div class="seg" id="lab-az" role="group" aria-label="threat bearing">
+            <button aria-pressed="true" data-az="30">From left</button>
+            <button aria-pressed="false" data-az="-30">From right</button>
+            <button aria-pressed="false" data-az="0">Head-on</button>
+          </div>
+        </div>
+        <div class="controls">
+          <button class="btn" id="lab-play">Pause</button>
+          <input type="range" id="lab-scrub" min="0" max="174" value="0" style="width:160px" aria-label="time">
+          <span class="mono" id="lab-time">t = 0.00 s</span>
+        </div>
+      </div>
+      <div class="lab">
+        <div><span class="corner">Top-down · drone and obstacle</span><canvas id="lab-flight"></canvas></div>
+        <div><span class="corner">Brain activity · neurons spiking this tick</span><canvas id="lab-brain"></canvas></div>
+      </div>
+      <div class="readouts">
+        <div class="readout"><b id="ro-dist">—</b><span class="label">distance to obstacle</span></div>
+        <div class="readout"><b id="ro-min">—</b><span class="label">closest approach this run</span></div>
+        <div class="readout"><b id="ro-yaw">—</b><span class="label">heading</span></div>
+        <div class="readout"><b id="ro-nact">—</b><span class="label">neurons spiking</span></div>
+      </div>
+      <div class="turnbar">
+        <div class="label">Turn command from the brain</div>
+        <div class="track"><div class="fill" id="turn-fill"></div></div>
+        <div class="ends"><span>◀ left</span><span>right ▶</span></div>
+      </div>
+      <div class="meters" id="meters"></div>
+      <div class="figcap" id="lab-cap"></div>
+    </div>
+
+    <div class="grid-2 rev" style="margin-top:2.5rem">
+      <div class="panel reveal">
+        <div class="head"><span class="t">Closest approach, metres</span></div>
+        <div class="body">
+          <div class="legend" style="margin-bottom:.6rem"><span style="--dot:#5a7ee0">no brain</span><span style="--dot:#e63946">fly brain</span><span style="--dot:#bf8a10">shuffled wiring</span></div>
+          <div id="exp2-chart"></div>
+        </div>
+        <div class="figcap">Zero means the sphere's centre passed through the drone. Anything above 0.3 m clears the sphere. Two independently shuffled brains are shown; the shuffle keeps every neuron, its sign and its number of synapses, and only randomises the targets.</div>
+      </div>
+      <div class="prose reveal">
+        <h3 class="font-display" style="font-size:2rem;margin-bottom:.6rem">What the brain actually did</h3>
+        <p>Within one 20 ms tick of the object starting to loom, the right-side steering neurons and the giant fiber were firing. The bridge turned that into a 20° bank and a yaw away from the threat. About 70° into the turn the object left the field of view, the brain went silent, and the drone coasted to a stop. It never learned where the object was; it only ever reacted to its growth on the retina.</p>
+        <p>Head-on threats are a tie-breaker problem for any symmetric system. This brain broke the tie to the right every time, because one saccade neuron, DNp03, only fires on the left in the current model. That is a quirk of the dataset, and it is visible in the data rather than hidden by tuning.</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ===================== EXPERIMENT 3 ===================== -->
+<section class="block" id="exp3">
+  <div class="wrap">
+    <div class="eyebrow"><span class="label">06 · Experiment 3</span></div>
+    <h2 class="title">Hold your heading</h2>
+    <p class="lede">Flies stabilise their flight with the optomotor reflex: when the whole world slides across the eye, they turn with it to cancel the slip. We spun the hovering drone with a one-second yaw torque and let the fly's motion detectors see the resulting optic flow. Same brain, same read-out, no changes.</p>
+    <div class="panel reveal" style="margin-top:2rem">
+      <div class="head">
+        <span class="t">Heading during a 1 s leftward disturbance</span>
+        <div class="controls"><button class="btn ghost" id="opto-play">Replay</button></div>
+      </div>
+      <div class="lab">
+        <div><span class="corner">Compass · where each drone points</span><canvas id="opto-compass"></canvas></div>
+        <div><div class="body"><div id="exp3-chart"></div></div></div>
+      </div>
+      <div class="readouts">
+        <div class="readout"><b data-fill="opto_nobrain">90°</b><span class="label">drift with no brain</span></div>
+        <div class="readout"><b data-fill="opto_real" style="color:var(--accent)">13°</b><span class="label">drift with the fly brain</span></div>
+        <div class="readout"><b data-fill="opto_shuffle1">102°</b><span class="label">drift with shuffled wiring #1</span></div>
+        <div class="readout"><b data-fill="opto_shuffle2">87°</b><span class="label">drift with shuffled wiring #2</span></div>
+      </div>
+      <div class="figcap">The disturbance torque would spin an uncontrolled drone at 90°/s. With the fly brain in the loop, roughly 2,300 neurons became active and the descending-neuron asymmetry commanded a turn against the rotation, holding drift to a few degrees. Shuffled brains were as active but produced no consistent command.</div>
+    </div>
+  </div>
+</section>
+
+<!-- ===================== CONTROL ===================== -->
+<section class="block" id="control">
+  <div class="wrap">
+    <div class="grid-2">
+      <div class="reveal">
+        <div class="eyebrow"><span class="label">07 · The control</span></div>
+        <h2 class="title">Is it the wiring, or would any big network do this?</h2>
+      </div>
+      <div class="prose reveal">
+        <p class="lede">The fair test is a brain that is identical in every way except the one thing FlyWire measured: who connects to whom.</p>
+        <p>We kept all 138,639 neurons, every neuron's transmitter sign, every synapse and its strength, and re-pointed each connection at a random target. Then we ran the exact same flights. The shuffled brains were just as active as the real one, often more so. They simply did not steer: three of four looming runs ended in a collision, the fourth turned by chance, and neither shuffled brain corrected the yaw disturbance at all.</p>
+        <div class="scroll-x" style="margin-top:1.4rem">
+          <table class="data" id="control-table"></table>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ===================== MEANING ===================== -->
+<section class="block" id="meaning">
+  <div class="wrap">
+    <div class="eyebrow"><span class="label">08 · What it means</span></div>
+    <h2 class="title">Why this matters</h2>
+    <p class="lede">A wiring diagram is not a brain, and a quadcopter is not a fly. But the result says something specific: the FlyWire connectome, run with the crudest possible neuron model, contains a working visual steering reflex that is correct in sign, lateralised, fast, and useless when scrambled.</p>
+    <div class="findings reveal">
+      <div class="finding"><h3>Function survives extreme simplification</h3><p>Every neuron here is the same leaky integrator with one global synaptic weight. No ion channels, no gap junctions, no neuromodulators, no learning. Steering still came out of the wiring alone, which suggests the circuit logic is written mostly in the connectivity.</p></div>
+      <div class="finding"><h3>The signs were right without tuning</h3><p>We fixed the read-out signs from published physiology before the first flight. The wiring produced right-side steering activity for left-side threats, which is exactly the pattern that turns a real fly away. That is a prediction the connectome made, not a result we fitted.</p></div>
+      <div class="finding"><h3>Two reflexes, one read-out</h3><p>The same eight command neurons and the same gains handled both escape from a looming object and stabilisation against rotation. In flies those are considered separate circuits; here they converged on the same descending neurons in a way that happened to be consistent.</p></div>
+      <div class="finding"><h3>A testable model of the fly</h3><p>Because nothing is trained, every discrepancy is informative. The silent right DNp03, the DNp03 response to LC4 but not LPLC2, and the differing giant-fiber transmitter predictions on the two sides are all concrete things a biologist could check in the animal.</p></div>
+    </div>
+    <h3 class="font-display" style="font-size:2rem;margin:3rem 0 .8rem">What it does not show</h3>
+    <ul class="caveats prose">
+      <li><b>Only the brain is real.</b> Wing motor neurons and the haltere reflexes that actually stabilise a fly live in the ventral nerve cord, which is not in this dataset. A conventional autopilot stands in for it.</li>
+      <li><b>The retina and the bridge are ours.</b> Which geometric quantity drives which cell type, and how eight descending neurons become roll, yaw and thrust, are design choices. We kept them linear and fixed, but they are choices.</li>
+      <li><b>The controller is nearly bang-bang.</b> Descending neurons switch on as a step and the model has no persistence, so the drone gets a hard turn rather than a proportional one. A fly's body dynamics and nerve cord smooth this in ways we did not model.</li>
+      <li><b>Small numbers.</b> Four trials per condition, three bearings, two shuffles. Enough to show a clean effect, not enough for statistics on subtle ones.</li>
+      <li><b>Not real time.</b> The full brain runs about six times slower than real time on a desktop CPU. Everything here ran in simulated lockstep.</li>
+    </ul>
+  </div>
+</section>
+
+<!-- ===================== METHOD ===================== -->
+<section class="block" id="method">
+  <div class="wrap">
+    <div class="eyebrow"><span class="label">09 · Method &amp; notation</span></div>
+    <h2 class="title">The numbers behind the pictures</h2>
+    <div class="grid-2" style="margin-top:2rem">
+      <div class="reveal">
+        <div class="scroll-x"><table class="data">
+          <tr><th>Item</th><th class="num">Value</th></tr>
+          <tr><td>Connectome release</td><td class="num">FlyWire v783</td></tr>
+          <tr><td>Neurons in model</td><td class="num" data-fill="n_neurons">138,639</td></tr>
+          <tr><td>Directed connections</td><td class="num" data-fill="n_edges">15.09M</td></tr>
+          <tr><td>Synapses</td><td class="num" data-fill="n_synapses">54.5M</td></tr>
+          <tr><td>Neuron model</td><td class="num">LIF, v<sub>th</sub> −45 mV, τ<sub>m</sub> 20 ms</td></tr>
+          <tr><td>Synaptic weight</td><td class="num">0.275 mV × synapse count</td></tr>
+          <tr><td>Simulation step</td><td class="num">0.1 ms (Brian2, Cython)</td></tr>
+          <tr><td>Control tick</td><td class="num">20 ms</td></tr>
+          <tr><td>Wall time per tick</td><td class="num">0.116 s (≈6× real time)</td></tr>
+          <tr><td>Wall time per 3.5 s flight</td><td class="num">≈20 s</td></tr>
+          <tr><td>Drone</td><td class="num">0.5 kg, 6-DOF, 1 ms physics</td></tr>
+          <tr><td>Bridge smoothing</td><td class="num">EMA τ = 60 ms</td></tr>
+          <tr><td>Bank / yaw limits</td><td class="num">20°, 120°/s</td></tr>
+          <tr><td>Hardware</td><td class="num">i7-12700F, WSL2, 24 GB</td></tr>
+        </table></div>
+      </div>
+      <div class="reveal">
+        <dl class="gloss">
+          <dt>LPLC2, LC4</dt><dd>Lobula plate / lobula columnar neurons. Visual projection neurons that respond to looming (an object growing on the retina). ~100 and ~50 per eye.</dd>
+          <dt>T4, T5</dt><dd>Elementary motion detectors of the fly. Subtypes a–d prefer front-to-back, back-to-front, up and down motion. ~6,000 per eye.</dd>
+          <dt>DN</dt><dd>Descending neuron: carries commands from brain to nerve cord. 1,299 in this dataset. Named by tract and number, e.g. DNa02.</dd>
+          <dt>DNp01</dt><dd>The giant fiber. One neuron per side; drives the escape take-off.</dd>
+          <dt>DNa02, DNa01, DNb01</dt><dd>Steering DNs. Activity on one side turns the fly toward that side.</dd>
+          <dt>DNg02</dt><dd>A population that sets wing-stroke amplitude; more on one side turns the fly the other way.</dd>
+          <dt>DNp03, DNp11</dt><dd>Looming-responsive DNs linked to evasive saccades.</dd>
+          <dt>LI</dt><dd>Lateralisation index, (left − right) / (left + right). +1 means only the left copy fired.</dd>
+          <dt>Hz</dt><dd>Spikes per second per neuron, averaged over the group.</dd>
+          <dt>Shuffled wiring</dt><dd>Each synapse keeps its source, sign and strength but gets a uniformly random target.</dd>
+        </dl>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ===================== SOURCES ===================== -->
+<section class="block" id="sources">
+  <div class="wrap">
+    <div class="eyebrow"><span class="label">10 · Sources</span></div>
+    <h2 class="title">Standing on a lot of shoulders</h2>
+    <div class="grid-2" style="margin-top:2rem">
+      <div class="reveal">
+        <h3 class="label" style="margin-bottom:1rem">Data and model</h3>
+        <ol class="sources">
+          <li>Dorkenwald, S. et al. <a href="https://www.nature.com/articles/s41586-024-07558-y">Neuronal wiring diagram of an adult brain.</a> <i>Nature</i> 634, 124–138 (2024). The FlyWire connectome.</li>
+          <li>Schlegel, P. et al. <a href="https://www.nature.com/articles/s41586-024-07686-5">Whole-brain annotation and multi-connectome cell typing of Drosophila.</a> <i>Nature</i> 634, 139–152 (2024). Cell-type labels used to find every neuron named here; data via <a href="https://github.com/flyconnectome/flywire_annotations">flyconnectome/flywire_annotations</a>.</li>
+          <li>Shiu, P. K. et al. <a href="https://www.nature.com/articles/s41586-024-07763-9">A Drosophila computational brain model reveals sensorimotor processing.</a> <i>Nature</i> 634, 210–219 (2024). The leaky integrate-and-fire model; code at <a href="https://github.com/philshiu/Drosophila_brain_model">philshiu/Drosophila_brain_model</a>.</li>
+          <li>Stimberg, M., Brette, R. &amp; Goodman, D. F. M. <a href="https://elifesciences.org/articles/47314">Brian 2, an intuitive and efficient neural simulator.</a> <i>eLife</i> 8, e47314 (2019).</li>
+          <li>Kakaria, K. S. &amp; de Bivort, B. L. <a href="https://doi.org/10.3389/fnbeh.2017.00008">Ring attractor dynamics emerge from a spiking model of the entire protocerebral bridge.</a> <i>Front. Behav. Neurosci.</i> 11, 8 (2017). Source of the membrane constants.</li>
+        </ol>
+        <h3 class="label" style="margin:1.6rem 0 1rem">Prior attempts we learned from</h3>
+        <ol class="sources" start="6">
+          <li><a href="https://github.com/SpikeCalls/FlyDrones">FlyDrones</a> — camera → visual neurons → spiking MaleCNS connectome → descending neurons → real drone. The closest prior pipeline; its authors were candid that the retina and read-out were engineered.</li>
+          <li><a href="https://github.com/CC834/flywire-drone-brain">flywire-drone-brain</a> — backend benchmarks of the same Shiu model on FlyWire v783.</li>
+          <li><a href="https://eon.systems/updates/embodied-brain-emulation">Eon Systems, embodied fly</a> — looming input reaches escape neurons in the Shiu model; body coupling left open.</li>
+          <li><a href="https://github.com/HaroldHormaechea/drone-fly">drone-fly</a> — connectome-seeded policy trained by reinforcement learning to race; a different question, because training discards the wiring's own answer.</li>
+        </ol>
+      </div>
+      <div class="reveal">
+        <h3 class="label" style="margin-bottom:1rem">The biology behind the read-out signs</h3>
+        <ol class="sources" start="10">
+          <li>Klapoetke, N. C. et al. <a href="https://www.nature.com/articles/nature24626">Ultra-selective looming detection from radial motion opponency.</a> <i>Nature</i> 551, 237–241 (2017). LPLC2.</li>
+          <li>Ache, J. M. et al. <a href="https://doi.org/10.1016/j.neuron.2019.04.028">Neural basis for looming size and velocity encoding in the Drosophila giant fiber escape pathway.</a> <i>Curr. Biol.</i> 29, 1073–1081 (2019). LC4 and LPLC2 onto the giant fiber.</li>
+          <li>von Reyn, C. R. et al. <a href="https://doi.org/10.1038/nn.3741">A spike-timing mechanism for action selection.</a> <i>Nat. Neurosci.</i> 17, 962–970 (2014). Giant fiber escape.</li>
+          <li>Namiki, S. et al. <a href="https://elifesciences.org/articles/34272">The functional organization of descending sensory-motor pathways in Drosophila.</a> <i>eLife</i> 7, e34272 (2018). The DN catalogue and naming.</li>
+          <li>Rayshubskiy, A. et al. <a href="https://elifesciences.org/articles/102230">Neural circuit mechanisms for steering control in walking Drosophila.</a> <i>eLife</i> (2024). DNa02 drives ipsiversive turns.</li>
+          <li>Namiki, S. et al. <a href="https://doi.org/10.1016/j.cub.2022.01.008">A population of descending neurons that regulates the flight motor of Drosophila.</a> <i>Curr. Biol.</i> 32, 1189–1196 (2022). DNg02 and wing-stroke amplitude.</li>
+          <li>Muijres, F. T. et al. <a href="https://doi.org/10.1126/science.1248955">Flies evade looming targets by executing rapid visually directed banked turns.</a> <i>Science</i> 344, 172–177 (2014). Banked evasive turns.</li>
+        </ol>
+        <p class="muted" style="margin-top:1.6rem;font-size:.85rem">Conventions: "left" and "right" are the fly's own sides as labelled in the annotation dataset. Firing rates are means over trials of spikes per second per neuron. All simulations, code and logs are in the project repository.</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<footer>
+  <div class="wrap">
+    <div class="brand">FLY // DRONE</div>
+    <p style="margin-top:.6rem">An experiment in running a real connectome as a controller. Built September 2026 with Claude Code on a desktop PC. Simulation code, flight logs and this page: <a href="https://github.com/ClutchMedia775/fly-brain-drone" id="repo-link">source repository</a>.</p>
+    <p class="muted">FlyWire data © the FlyWire consortium, CC-BY 4.0. Model code © Philip Shiu et al. This page makes no claim of endorsement by either.</p>
+  </div>
+</footer>
+
+<div class="tip" id="tip"></div>
+
+<script src="data/brain_meta.js"></script>
+<script src="data/groups.js"></script>
+<script src="data/act_loom_real.js"></script>
+<script src="data/act_loom_shuffle.js"></script>
+<script src="data/act_opto_real.js"></script>
+<script src="data/loom.js"></script>
+<script src="data/opto.js"></script>
+<script src="data/phase1.js"></script>
+<script src="data/summary.js"></script>
+<script src="app.js"></script>
+</body>
+</html>
