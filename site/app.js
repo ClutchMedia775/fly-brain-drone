@@ -44,7 +44,12 @@
     opto_nobrain: FB.opto ? fmt(FB.opto.nobrain.total_yaw) + '°' : '', opto_real: FB.opto ? fmt(FB.opto.real.total_yaw) + '°' : '',
     opto_shuffle1: FB.opto ? fmt(FB.opto.shuffle1.total_yaw) + '°' : '', opto_shuffle2: FB.opto ? fmt(FB.opto.shuffle2.total_yaw) + '°' : '',
   };
-  if (FB.loom) { const keys = Object.keys(FB.loom).filter(k => k.startsWith('real_')); fills.evade_ratio = keys.filter(k => FB.loom[k].min_dist > 0.3).length + ' / ' + keys.length; }
+  if (FB.loom) {
+    // every real-wiring looming flight on record: the first three, the n=10 comparison, and the bearing x speed x size sweep
+    const keys = Object.keys(FB.loom).filter(k => k.startsWith('real_')); let ok = keys.filter(k => FB.loom[k].min_dist > 0.3).length, n = keys.length;
+    const P = FB.phase56; if (P) { const r = (P.main || []).find(x => x.cond === 'real'); if (r) { ok += Math.round(r.evade_rate * r.n); n += r.n; } (P.robust || []).forEach(x => { ok += Math.round(x.evade_rate * x.n); n += x.n; }); }
+    fills.evade_ratio = `${ok} / ${n}`;
+  }
   $$('[data-fill]').forEach(e => { const v = fills[e.dataset.fill]; if (v) e.textContent = v; });
 
   /* ---------- mobile menu ---------- */

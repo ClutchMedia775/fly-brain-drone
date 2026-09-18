@@ -26,11 +26,12 @@
     <li><a class="link" href="#map">Brain map</a></li>
     <li><a class="link" href="#exp1">Left vs right</a></li>
     <li><a class="link" href="#exp2">Dodge</a></li>
+    <li><a class="link" href="#replay3d">3D</a></li>
     <li><a class="link" href="#exp3">Heading</a></li>
     <li><a class="link" href="#control">Control</a></li>
     <li><a class="link" href="#motion">Round two</a></li>
     <li><a class="link" href="#twobrains">Two brains</a></li>
-    <li><a class="link" href="#replay3d">3D</a></li>
+    <li><a class="link" href="#stress">Stress test</a></li>
     <li><a class="link" href="#meaning">Meaning</a></li>
     <li><a class="link" href="#sources">Sources</a></li>
   </ul>
@@ -56,7 +57,7 @@
       <div class="stat"><b data-fill="n_neurons">138,639</b><span class="label">neurons simulated</span></div>
       <div class="stat"><b data-fill="n_synapses">54.5M</b><span class="label">synapses in the wiring</span></div>
       <div class="stat"><b>0</b><span class="label">parameters trained</span></div>
-      <div class="stat"><b data-fill="evade_ratio">6 / 6</b><span class="label">threats evaded with the real wiring</span></div>
+      <div class="stat"><b data-fill="evade_ratio">185 / 185</b><span class="label">threats evaded with the real wiring</span></div>
     </div>
   </div>
   <div class="scroll-cue">Scroll</div>
@@ -220,10 +221,26 @@
   </div>
 </section>
 
+<!-- ===================== 3D REPLAY ===================== -->
+<section class="block" id="replay3d">
+  <div class="wrap">
+    <div class="eyebrow"><span class="label">06 · 3D replay</span></div>
+    <h2 class="title">The dodge, in three dimensions</h2>
+    <div class="panel reveal" style="margin-top:2rem">
+      <div class="head">
+        <div class="seg" id="flight3d-seg" role="group" aria-label="run"><button aria-pressed="true" data-key="real_30">Threat from left</button><button aria-pressed="false" data-key="real_-30">Threat from right</button><button aria-pressed="false" data-key="real_0">Head-on</button><button aria-pressed="false" data-key="nobrain_30">No brain</button></div>
+        <div class="controls"><button class="btn" id="flight3d-play">Pause</button><span class="mono" id="flight3d-time"></span></div>
+      </div>
+      <div id="flight3d" class="three-host"></div>
+      <div class="figcap">Position, altitude, bank and heading come straight from the simulation logs. The camera follows; nothing is animated by hand.</div>
+    </div>
+  </div>
+</section>
+
 <!-- ===================== EXPERIMENT 3 ===================== -->
 <section class="block" id="exp3">
   <div class="wrap">
-    <div class="eyebrow"><span class="label">06 · Experiment 3</span></div>
+    <div class="eyebrow"><span class="label">07 · Experiment 3</span></div>
     <h2 class="title">Hold your heading</h2>
     <p class="lede">Flies stabilise their flight with the optomotor reflex: when the whole world slides across the eye, they turn with it to cancel the slip. We spun the hovering drone with a one-second yaw torque and let the fly's motion detectors see the resulting optic flow. Same brain, same read-out, no changes.</p>
     <div class="panel reveal" style="margin-top:2rem">
@@ -251,12 +268,13 @@
   <div class="wrap">
     <div class="grid-2">
       <div class="reveal">
-        <div class="eyebrow"><span class="label">07 · The control</span></div>
+        <div class="eyebrow"><span class="label">08 · The control</span></div>
         <h2 class="title">Is it the wiring, or would any big network do this?</h2>
       </div>
       <div class="prose reveal">
         <p class="lede">The fair test is a brain that is identical in every way except the one thing FlyWire measured: who connects to whom.</p>
-        <p>We kept all 138,639 neurons, every neuron's transmitter sign, every synapse and its strength, and re-pointed each connection at a random target. Then we ran the exact same flights. The shuffled brains were just as active as the real one, often more so. They simply did not steer: three of four looming runs ended in a collision, the fourth turned by chance, and neither shuffled brain corrected the yaw disturbance at all.</p>
+        <p>We kept all 138,639 neurons, every neuron's transmitter sign, every synapse and its strength, and re-pointed each connection at a random target, which leaves every neuron with the same number of inputs and outputs. Then we ran the exact same flights. The shuffled brains were just as active as the real one, often more so. They simply did not steer. In this first pass with two shuffled brains, three of four looming runs ended in a collision, the fourth turned by chance, and neither corrected the yaw disturbance.</p>
+        <p>The stress test further down repeats this at scale: three shuffled brains and sixty flights gave fifty collisions, and the ten that cleared all came from one shuffle that only ever turned one way, whichever side the threat came from. A second control there, the real brain read out through randomly chosen command neurons, behaved the same way.</p>
         <div class="scroll-x" style="margin-top:1.4rem">
           <table class="data" id="control-table"></table>
         </div>
@@ -270,7 +288,7 @@
   <div class="wrap">
     <div class="grid-2">
       <div class="reveal">
-        <div class="eyebrow"><span class="label">08 · Round two</span></div>
+        <div class="eyebrow"><span class="label">09 · Round two</span></div>
         <h2 class="title">The brain computes looming by itself</h2>
         <div class="prose" style="margin-top:1.4rem">
           <p>In the first experiments we told the brain "something is looming" by stimulating its looming-detector neurons directly. That is a fair test of the steering circuit, but not of the detector. So we stopped. Instead we stimulated only the fly's elementary motion detectors, T4 and T5, which come in four flavours tuned to front-to-back, back-to-front, upward and downward motion.</p>
@@ -293,7 +311,7 @@
 <!-- ===================== ROUND TWO: TWO BRAINS ===================== -->
 <section class="block" id="twobrains">
   <div class="wrap">
-    <div class="eyebrow"><span class="label">09 · Two brains, one reflex</span></div>
+    <div class="eyebrow"><span class="label">10 · Two brains, one reflex</span></div>
     <h2 class="title">Does a second fly agree?</h2>
     <p class="lede">FlyWire is one female fly. In June 2026 a second team published MaleCNS: a complete male fly, brain <em>and</em> nerve cord, reconstructed independently. We ran the same simulation on it. If the reflex is real biology and not a quirk of one specimen, it should be there too. Spin the brains, then read the numbers.</p>
     <div class="panel reveal" style="margin-top:2rem">
@@ -323,7 +341,7 @@
 <!-- ===================== ROUND TWO: STRESS TEST ===================== -->
 <section class="block" id="stress">
   <div class="wrap">
-    <div class="eyebrow"><span class="label">10 · Stress test</span></div>
+    <div class="eyebrow"><span class="label">11 · Stress test</span></div>
     <h2 class="title">Would it hold up in a lab?</h2>
     <p class="lede">Four trials is a demo. So we flew it a few hundred more times, against three kinds of control, with parts removed, across bearings, speeds and sizes, and while cruising past things that were never a threat.</p>
     <div class="stats" style="animation:none;opacity:1;margin-top:1.6rem;max-width:none">
@@ -359,22 +377,6 @@
   </div>
 </section>
 
-<!-- ===================== 3D REPLAY ===================== -->
-<section class="block tight" id="replay3d">
-  <div class="wrap">
-    <div class="eyebrow"><span class="label">11 · 3D replay</span></div>
-    <h2 class="title">The dodge, in three dimensions</h2>
-    <div class="panel reveal" style="margin-top:2rem">
-      <div class="head">
-        <div class="seg" id="flight3d-seg" role="group" aria-label="run"><button aria-pressed="true" data-key="real_30">Threat from left</button><button aria-pressed="false" data-key="real_-30">Threat from right</button><button aria-pressed="false" data-key="real_0">Head-on</button><button aria-pressed="false" data-key="nobrain_30">No brain</button></div>
-        <div class="controls"><button class="btn" id="flight3d-play">Pause</button><span class="mono" id="flight3d-time"></span></div>
-      </div>
-      <div id="flight3d" class="three-host"></div>
-      <div class="figcap">Position, altitude, bank and heading come straight from the simulation logs. The camera follows; nothing is animated by hand.</div>
-    </div>
-  </div>
-</section>
-
 <!-- ===================== ROADMAP ===================== -->
 <section class="block" id="roadmap">
   <div class="wrap">
@@ -406,7 +408,7 @@
     </div>
     <h3 class="font-display" style="font-size:2rem;margin:3rem 0 .8rem">What it does not show</h3>
     <ul class="caveats prose">
-      <li><b>Only the brain is real.</b> Wing motor neurons and the haltere reflexes that actually stabilise a fly live in the ventral nerve cord, which is not in this dataset. A conventional autopilot stands in for it.</li>
+      <li><b>The body is not real.</b> In FlyWire the wing motor neurons and the haltere reflexes that actually stabilise a fly live in the ventral nerve cord, which is not in the dataset, so a conventional autopilot stands in for it. MaleCNS includes the nerve cord, and there the escape reaches the wing muscles on its own, but the drone's body is still the same autopilot and the motor-neuron steering read-out is not yet trustworthy.</li>
       <li><b>The retina and the bridge are ours.</b> Which geometric quantity drives which cell type, and how eight descending neurons become roll, yaw and thrust, are design choices. We kept them linear and fixed, but they are choices.</li>
       <li><b>The controller is nearly bang-bang.</b> Descending neurons switch on as a step and the model has no persistence, so the drone gets a hard turn rather than a proportional one. A fly's body dynamics and nerve cord smooth this in ways we did not model.</li>
       <li><b>Moderate numbers.</b> Ten flights per bearing for the main comparison, three per cell in the sweep, four or five elsewhere. Enough for clean effect sizes with confidence intervals, not enough for subtle ones.</li>
@@ -419,7 +421,7 @@
 <!-- ===================== METHOD ===================== -->
 <section class="block" id="method">
   <div class="wrap">
-    <div class="eyebrow"><span class="label">09 · Method &amp; notation</span></div>
+    <div class="eyebrow"><span class="label">14 · Method &amp; notation</span></div>
     <h2 class="title">The numbers behind the pictures</h2>
     <div class="grid-2" style="margin-top:2rem">
       <div class="reveal">
@@ -465,7 +467,7 @@
 <!-- ===================== SOURCES ===================== -->
 <section class="block" id="sources">
   <div class="wrap">
-    <div class="eyebrow"><span class="label">10 · Sources</span></div>
+    <div class="eyebrow"><span class="label">15 · Sources</span></div>
     <h2 class="title">Standing on a lot of shoulders</h2>
     <div class="grid-2" style="margin-top:2rem">
       <div class="reveal">
