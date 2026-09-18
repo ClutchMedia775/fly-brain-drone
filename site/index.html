@@ -47,7 +47,7 @@
   <div class="content">
     <p class="label" style="margin-bottom:1rem">Live replay · the real fly connectome seeing an object rush toward it</p>
     <h1><span><i>A FRUIT FLY'S BRAIN</i></span><span><i>FLIES A DRONE.</i></span></h1>
-    <p class="sub">We took the complete wiring diagram of a fruit fly's brain, ran it as a spiking neural network, connected its eyes to a virtual camera and its command neurons to a quadcopter. Nobody trained it. It dodged.</p>
+    <p class="sub">We took the complete wiring diagram of a fruit fly's brain, ran it as a spiking neural network, connected its eyes to a virtual camera and its command neurons to a quadcopter. Nobody trained it. When a virtual object flew at the drone, the fly's own wiring steered it out of the way.</p>
     <div class="stats">
       <div class="stat"><b data-fill="n_neurons">138,639</b><span class="label">neurons simulated</span></div>
       <div class="stat"><b data-fill="n_synapses">54.5M</b><span class="label">synapses in the wiring</span></div>
@@ -87,7 +87,7 @@
     <h2 class="title">Real biology in the middle, honest engineering at the edges</h2>
     <p class="lede">Three parts run in lockstep, twenty milliseconds at a time. The parts marked <span class="tag real">real</span> come straight from the fly. The parts marked <span class="tag eng">engineered</span> are ours, and we say exactly what they do.</p>
     <div class="panel reveal" style="margin-top:2rem">
-      <div class="body"><div id="pipeline-svg"></div></div>
+      <div class="body pipe-scroll"><div id="pipeline-svg"></div></div>
       <div class="figcap">Every 20 ms the retina model sets firing rates on ~6,400 visual neurons, the connectome simulation advances, spike counts are read from 1,299 descending neurons, and a linear read-out turns eight of them into setpoints for a standard attitude autopilot. The autopilot plays the role of the fly's ventral nerve cord, which is not part of the brain dataset.</div>
     </div>
     <div class="grid-3 reveal">

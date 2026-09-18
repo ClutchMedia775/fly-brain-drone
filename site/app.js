@@ -143,24 +143,25 @@
     ];
     const y = 90, bh = 96;
     boxes.forEach(b => {
-      el('rect', { x: b.x, y, width: b.w, height: bh, rx: 4, fill: '#161616', stroke: b.c, 'stroke-width': 1.2 }, svg);
+      el('rect', { x: b.x, y, width: b.w, height: bh, rx: 5, fill: b.c, 'fill-opacity': 0.14, stroke: b.c, 'stroke-width': 1.6 }, svg);
+      el('rect', { x: b.x, y, width: 5, height: bh, rx: 2, fill: b.c }, svg);
       const t = el('text', { x: b.x + b.w / 2, y: y + 42, 'text-anchor': 'middle', class: 'strong', style: 'font-family:Bebas Neue,sans-serif;font-size:26px;letter-spacing:1px' }, svg); t.textContent = b.t;
-      const s = el('text', { x: b.x + b.w / 2, y: y + 63, 'text-anchor': 'middle', style: 'font-size:12px' }, svg); s.textContent = b.s;
-      if (b.tag) { const g = el('text', { x: b.x + b.w / 2, y: y + 84, 'text-anchor': 'middle', style: `fill:${b.c};font-size:9px;letter-spacing:3px` }, svg); g.textContent = b.tag.toUpperCase(); }
+      const s = el('text', { x: b.x + b.w / 2, y: y + 63, 'text-anchor': 'middle', style: 'fill:#e6e6e6;font-size:12px' }, svg); s.textContent = b.s;
+      if (b.tag) { const g = el('text', { x: b.x + b.w / 2, y: y + 84, 'text-anchor': 'middle', style: `fill:${b.c};font-size:10px;letter-spacing:3px;font-weight:600` }, svg); g.textContent = b.tag.toUpperCase(); }
     });
-    const arrow = (x1, x2, label) => {
-      el('line', { x1, y1: y + bh / 2, x2: x2 - 8, y2: y + bh / 2, stroke: '#3a3a3a', 'stroke-width': 1.5 }, svg);
-      el('line', { x1, y1: y + bh / 2, x2: x2 - 8, y2: y + bh / 2, stroke: C.white, 'stroke-width': 1.5, class: 'flow', opacity: .8 }, svg);
-      el('path', { d: `M${x2 - 8},${y + bh / 2 - 5} L${x2},${y + bh / 2} L${x2 - 8},${y + bh / 2 + 5} Z`, fill: C.white }, svg);
-      if (label) { const t = el('text', { x: (x1 + x2) / 2, y: y + bh / 2 - 10, 'text-anchor': 'middle', style: 'font-size:10px' }, svg); t.textContent = label; }
+    const arrow = (x1, x2, label, col) => {
+      el('line', { x1, y1: y + bh / 2, x2: x2 - 8, y2: y + bh / 2, stroke: '#3a3a3a', 'stroke-width': 2 }, svg);
+      el('line', { x1, y1: y + bh / 2, x2: x2 - 8, y2: y + bh / 2, stroke: col, 'stroke-width': 2, class: 'flow' }, svg);
+      el('path', { d: `M${x2 - 9},${y + bh / 2 - 6} L${x2},${y + bh / 2} L${x2 - 9},${y + bh / 2 + 6} Z`, fill: col }, svg);
+      if (label) { const t = el('text', { x: (x1 + x2) / 2, y: y + bh / 2 - 12, 'text-anchor': 'middle', style: `fill:${C.white};font-size:11px;font-weight:500` }, svg); t.textContent = label; }
     };
-    arrow(210, 250, 'Poisson spikes'); arrow(510, 550, 'spike counts'); arrow(740, 780, 'roll · yaw · thrust'); arrow(930, 970, 'torques');
+    arrow(210, 250, 'Poisson spikes', C.left); arrow(510, 550, 'spike counts', C.accent); arrow(740, 780, 'roll · yaw · thrust', C.shuffle); arrow(930, 970, 'torques', C.nobrain);
     // feedback loop
     const fy = y + bh + 60;
     el('path', { d: `M1025,${y + bh} L1025,${fy} L115,${fy} L115,${y + bh + 8}`, fill: 'none', stroke: '#3a3a3a', 'stroke-width': 1.5 }, svg);
     el('path', { d: `M1025,${y + bh} L1025,${fy} L115,${fy} L115,${y + bh + 8}`, fill: 'none', stroke: C.nobrain, 'stroke-width': 1.5, class: 'flow', opacity: .9 }, svg);
     el('path', { d: `M110,${y + bh + 10} L115,${y + bh} L120,${y + bh + 10} Z`, fill: C.nobrain }, svg);
-    const fl = el('text', { x: 570, y: fy - 8, 'text-anchor': 'middle', style: 'font-size:10px' }, svg); fl.textContent = 'drone position, heading and rotation rate → what the eyes see next (every 20 ms)';
+    const fl = el('text', { x: 570, y: fy - 8, 'text-anchor': 'middle', style: `fill:${C.nobrain};font-size:11px;font-weight:500` }, svg); fl.textContent = 'drone position, heading and rotation rate → what the eyes see next (every 20 ms)';
     const t1 = el('text', { x: 20, y: 30, class: 'strong', style: 'font-size:11px;letter-spacing:2px' }, svg); t1.textContent = 'ONE CONTROL TICK · 20 ms simulated · 0.12 s wall';
     host.appendChild(svg);
   })();
