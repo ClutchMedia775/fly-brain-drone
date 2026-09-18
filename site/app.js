@@ -47,6 +47,15 @@
   if (FB.loom) { const keys = Object.keys(FB.loom).filter(k => k.startsWith('real_')); fills.evade_ratio = keys.filter(k => FB.loom[k].min_dist > 0.3).length + ' / ' + keys.length; }
   $$('[data-fill]').forEach(e => { const v = fills[e.dataset.fill]; if (v) e.textContent = v; });
 
+  /* ---------- mobile menu ---------- */
+  (function menu() {
+    const nav = $('#nav'), btn = $('#menu-btn'); if (!nav || !btn) return;
+    const set = (open) => { nav.classList.toggle('open', open); btn.setAttribute('aria-expanded', open); };
+    btn.addEventListener('click', () => set(!nav.classList.contains('open')));
+    $$('#nav-list a').forEach(a => a.addEventListener('click', () => set(false)));
+    document.addEventListener('keydown', e => { if (e.key === 'Escape') set(false); });
+  })();
+
   /* ---------- reveal on scroll ---------- */
   const io = new IntersectionObserver(es => es.forEach(e => e.isIntersecting && e.target.classList.add('in')), { threshold: 0.12 });
   $$('.reveal').forEach(e => io.observe(e));
