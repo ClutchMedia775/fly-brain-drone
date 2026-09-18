@@ -40,23 +40,30 @@
     });
   })();
 
-  /* ---------- shuffle illustration: the same nodes, real vs random targets ---------- */
+  /* ---------- collapsible contents ---------- */
+  (function toc() {
+    const sec = $('#contents'), btn = $('#toc-toggle'); if (!sec || !btn) return;
+    const word = btn.querySelector('.toc-word');
+    const set = (open) => { sec.classList.toggle('open', open); btn.setAttribute('aria-expanded', open); word.textContent = open ? 'Hide chapters' : 'Show chapters'; };
+    btn.addEventListener('click', () => set(!sec.classList.contains('open')));
+    $('#chapters').addEventListener('click', e => { if (e.target.closest('a')) set(false); });
+  })();
+
+  /* ---------- shuffle illustration (SVG): the same nodes, real vs random targets ---------- */
   (function shuffleDiagram() {
-    const cv = $('#shuffle-diagram'); if (!cv) return;
-    const dpr = Math.min(devicePixelRatio || 1, 2); const w = cv.parentElement.clientWidth || 600, h = Math.round(w * 0.46); cv.width = w * dpr; cv.height = h * dpr; cv.style.width = '100%'; cv.style.height = h + 'px';
-    const ctx = cv.getContext('2d'); ctx.setTransform(dpr, 0, 0, dpr, 0, 0);
+    const host = $('#shuffle-diagram'); if (!host) return;
     let seed = 7; const rnd = () => (seed = (seed * 16807) % 2147483647) / 2147483647;
-    const N = 26, half = w / 2;
-    const layout = (ox) => Array.from({ length: N }, (_, i) => { const col = i % 3, row = Math.floor(i / 3); return { x: ox + 40 + col * ((half - 80) / 2) + (rnd() - .5) * 18, y: 30 + row * ((h - 70) / 8) + (rnd() - .5) * 10, c: col }; });
-    const draw = (ox, title, shuffled) => {
-      seed = 7; const P = layout(ox); const edges = [];
-      P.forEach((p, i) => { if (p.c < 2) { const targets = P.map((q, j) => j).filter(j => P[j].c === p.c + 1); for (let k = 0; k < 2; k++) edges.push([i, targets[Math.floor(rnd() * targets.length)]]); } });
+    const W = 640, H = 250, half = W / 2, N = 24, cols = [70, 160, 250];
+    const panel = (ox, title, shuffled) => {
+      seed = 7; const P = Array.from({ length: N }, (_, i) => ({ x: ox + cols[i % 3] + (rnd() - .5) * 16, y: 44 + Math.floor(i / 3) * 22 + (rnd() - .5) * 8, c: i % 3 }));
+      const edges = []; P.forEach((p, i) => { if (p.c < 2) { const t = P.map((q, j) => j).filter(j => P[j].c === p.c + 1); for (let k = 0; k < 2; k++) edges.push([i, t[Math.floor(rnd() * t.length)]]); } });
       if (shuffled) { const tg = edges.map(e => e[1]); for (let i = tg.length - 1; i > 0; i--) { const j = Math.floor(rnd() * (i + 1)); [tg[i], tg[j]] = [tg[j], tg[i]]; } edges.forEach((e, i) => e[1] = tg[i]); }
-      ctx.lineWidth = 1.2; edges.forEach(([a, b]) => { ctx.strokeStyle = shuffled ? 'rgba(191,138,16,.55)' : 'rgba(46,159,191,.6)'; ctx.beginPath(); ctx.moveTo(P[a].x, P[a].y); ctx.bezierCurveTo(P[a].x + 40, P[a].y, P[b].x - 40, P[b].y, P[b].x, P[b].y); ctx.stroke(); });
-      P.forEach(p => { ctx.fillStyle = ['#2e9fbf', '#d9d9d9', '#e63946'][p.c]; ctx.beginPath(); ctx.arc(p.x, p.y, 4, 0, 7); ctx.fill(); });
-      ctx.fillStyle = '#ffffff'; ctx.font = '600 11px Inter'; ctx.fillText(title, ox + 16, h - 12);
-      ['eye', 'brain', 'command'].forEach((t, i) => { ctx.fillStyle = '#6f6f6f'; ctx.font = '9px Inter'; ctx.fillText(t.toUpperCase(), ox + 32 + i * ((half - 80) / 2), 16); });
+      const col = shuffled ? 'rgba(191,138,16,.6)' : 'rgba(46,159,191,.65)';
+      return `<g>${edges.map(([a, b]) => `<path d="M${P[a].x.toFixed(1)},${P[a].y.toFixed(1)} C${(P[a].x + 45).toFixed(1)},${P[a].y.toFixed(1)} ${(P[b].x - 45).toFixed(1)},${P[b].y.toFixed(1)} ${P[b].x.toFixed(1)},${P[b].y.toFixed(1)}" fill="none" stroke="${col}" stroke-width="1.2"/>`).join('')}` +
+        P.map(p => `<circle cx="${p.x.toFixed(1)}" cy="${p.y.toFixed(1)}" r="4" fill="${['#2e9fbf', '#d9d9d9', '#e63946'][p.c]}"/>`).join('') +
+        ['EYE', 'BRAIN', 'COMMAND'].map((t, i) => `<text x="${ox + cols[i]}" y="22" fill="#6f6f6f" font-size="9" letter-spacing="2" text-anchor="middle" font-family="Inter, system-ui, sans-serif">${t}</text>`).join('') +
+        `<text x="${ox + half / 2}" y="${H - 12}" fill="#ffffff" font-size="12" font-weight="600" text-anchor="middle" font-family="Inter, system-ui, sans-serif">${title}</text></g>`;
     };
-    ctx.fillStyle = '#111'; ctx.fillRect(0, 0, w, h); draw(0, 'Real wiring: each cell keeps its partners', false); ctx.strokeStyle = '#222'; ctx.beginPath(); ctx.moveTo(half, 10); ctx.lineTo(half, h - 10); ctx.stroke(); draw(half, 'Shuffled: same cells, same counts, random partners', true);
+    host.innerHTML = `<svg viewBox="0 0 ${W} ${H}" role="img" aria-label="Real wiring versus shuffled wiring, drawn as a toy network"><rect width="${W}" height="${H}" fill="#111"/><line x1="${half}" y1="12" x2="${half}" y2="${H - 12}" stroke="#262626"/>${panel(0, 'Real wiring', false)}${panel(half, 'Shuffled wiring', true)}</svg>`;
   })();
 })();

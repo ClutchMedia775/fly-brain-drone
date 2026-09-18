@@ -99,10 +99,13 @@
 </header>
 
 <!-- ===================== CONTENTS ===================== -->
-<section class="block tight" id="contents" style="padding-top:3rem">
+<section class="block tight" id="contents" style="padding-top:2.5rem;padding-bottom:2.5rem">
   <div class="wrap">
-    <div class="eyebrow"><span class="label">Contents · sixteen short chapters</span></div>
-    <div class="chapters" id="chapters"></div>
+    <button class="toc-toggle" id="toc-toggle" aria-expanded="false" aria-controls="chapters">
+      <span class="toc-left"><svg class="ico"><use href="#i-list"/></svg><span class="label" style="color:var(--white)">Contents</span><span class="toc-sub">16 short chapters · tap to jump anywhere</span></span>
+      <span class="toc-right"><span class="toc-word">Show chapters</span><svg class="ico chev"><use href="#i-up"/></svg></span>
+    </button>
+    <div class="chapters-wrap" id="chapters-wrap"><div class="chapters" id="chapters"></div></div>
   </div>
 </section>
 
@@ -345,9 +348,9 @@
         <p class="lede">The fair test is a brain that is identical in every way except the one thing FlyWire measured: who connects to whom.</p>
         <p>We kept all 138,639 neurons, every neuron's transmitter sign, every synapse and its strength, and re-pointed each connection at a random target, which leaves every neuron with the same number of inputs and outputs. Then we ran the exact same flights. The shuffled brains were just as active as the real one, often more so. They simply did not steer. In this first pass with two shuffled brains, three of four looming runs ended in a collision, the fourth turned by chance, and neither corrected the yaw disturbance.</p>
         <p>The stress test further down repeats this at scale: three shuffled brains and sixty flights gave fifty collisions, and the ten that cleared all came from one shuffle that only ever turned one way, whichever side the threat came from. A second control there, the real brain read out through randomly chosen command neurons, behaved the same way.</p>
-        <div class="diagram reveal" style="margin-top:1.4rem;padding:0">
-          <canvas id="shuffle-diagram"></canvas>
-          <div class="cap" style="padding:.7rem 1rem 1rem">Toy sketch of the control. Every dot keeps its colour, its number of connections and its transmitter; only who it talks to is randomised.</div>
+        <div class="diagram reveal" style="margin-top:1.4rem">
+          <div id="shuffle-diagram"></div>
+          <div class="cap">Toy sketch of the control. Left, the real wiring: each cell keeps its partners. Right, the shuffle: the same cells with the same number of connections each, but random partners. Teal dots are eye neurons, white are brain neurons, red are command neurons.</div>
         </div>
         <div class="scroll-x" style="margin-top:1.4rem">
           <table class="data" id="control-table"></table>
