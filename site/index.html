@@ -17,6 +17,40 @@
   <link rel="stylesheet" href="styles.css">
 </head>
 <body>
+<!-- icon sprite: one stroke weight, round caps, currentColor -->
+<svg width="0" height="0" style="position:absolute" aria-hidden="true">
+  <symbol id="i-eye" viewBox="0 0 24 24"><path d="M2 12s3.5-6 10-6 10 6 10 6-3.5 6-10 6S2 12 2 12Z"/><circle cx="12" cy="12" r="3"/></symbol>
+  <symbol id="i-brain" viewBox="0 0 24 24"><path d="M9 4.5A3 3 0 0 0 5 7a3 3 0 0 0-1.5 5A3 3 0 0 0 5 17a3 3 0 0 0 4 2.5V4.5Z"/><path d="M15 4.5A3 3 0 0 1 19 7a3 3 0 0 1 1.5 5A3 3 0 0 1 19 17a3 3 0 0 1-4 2.5V4.5Z"/><path d="M9 9h2M13 9h2M9 14h2M13 14h2"/></symbol>
+  <symbol id="i-drone" viewBox="0 0 24 24"><rect x="9" y="9" width="6" height="6" rx="1.5"/><path d="M9 9 5 5M15 9l4-4M9 15l-4 4M15 15l4 4"/><circle cx="4" cy="4" r="2"/><circle cx="20" cy="4" r="2"/><circle cx="4" cy="20" r="2"/><circle cx="20" cy="20" r="2"/></symbol>
+  <symbol id="i-bolt" viewBox="0 0 24 24"><path d="M13 2 4 14h7l-1 8 9-12h-7l1-8Z"/></symbol>
+  <symbol id="i-shuffle" viewBox="0 0 24 24"><path d="M3 7h4l4 5-4 5H3M21 7h-4l-2 2.5M21 17h-4l-2-2.5"/><path d="m18 4 3 3-3 3M18 14l3 3-3 3"/></symbol>
+  <symbol id="i-target" viewBox="0 0 24 24"><circle cx="12" cy="12" r="9"/><circle cx="12" cy="12" r="4.5"/><path d="M12 2v3M12 19v3M2 12h3M19 12h3"/></symbol>
+  <symbol id="i-compass" viewBox="0 0 24 24"><circle cx="12" cy="12" r="9"/><path d="m15.5 8.5-2 5-5 2 2-5 5-2Z"/></symbol>
+  <symbol id="i-rotate" viewBox="0 0 24 24"><path d="M20 12a8 8 0 1 1-2.3-5.7"/><path d="M20 4v5h-5"/></symbol>
+  <symbol id="i-expand" viewBox="0 0 24 24"><circle cx="12" cy="12" r="1.5"/><path d="M12 8V3M12 21v-5M8 12H3M21 12h-5M9.2 9.2 5.6 5.6M18.4 18.4l-3.6-3.6M14.8 9.2l3.6-3.6M5.6 18.4l3.6-3.6"/></symbol>
+  <symbol id="i-layers" viewBox="0 0 24 24"><path d="m12 3 9 5-9 5-9-5 9-5Z"/><path d="m3 13 9 5 9-5M3 17l9 5 9-5"/></symbol>
+  <symbol id="i-chart" viewBox="0 0 24 24"><path d="M4 20V10M10 20V4M16 20v-8M22 20H2"/></symbol>
+  <symbol id="i-cube" viewBox="0 0 24 24"><path d="m12 2 9 5v10l-9 5-9-5V7l9-5Z"/><path d="M12 12 3 7M12 12l9-5M12 12v10"/></symbol>
+  <symbol id="i-flag" viewBox="0 0 24 24"><path d="M5 22V3M5 4h12l-2 4 2 4H5"/></symbol>
+  <symbol id="i-camera" viewBox="0 0 24 24"><path d="M4 8h3l2-3h6l2 3h3v11H4V8Z"/><circle cx="12" cy="13" r="3.5"/></symbol>
+  <symbol id="i-chip" viewBox="0 0 24 24"><rect x="6" y="6" width="12" height="12" rx="2"/><rect x="9.5" y="9.5" width="5" height="5"/><path d="M9 2v4M15 2v4M9 18v4M15 18v4M2 9h4M2 15h4M18 9h4M18 15h4"/></symbol>
+  <symbol id="i-shield" viewBox="0 0 24 24"><path d="M12 2 4 5v6c0 5 3.5 9 8 11 4.5-2 8-6 8-11V5l-8-3Z"/><path d="m9 12 2 2 4-4"/></symbol>
+  <symbol id="i-clipboard" viewBox="0 0 24 24"><rect x="5" y="4" width="14" height="17" rx="2"/><path d="M9 4V2h6v2M8 10h8M8 14h8M8 18h5"/></symbol>
+  <symbol id="i-book" viewBox="0 0 24 24"><path d="M4 4h7a3 3 0 0 1 3 3v13a2 2 0 0 0-2-2H4V4ZM20 4h-7a3 3 0 0 0-3 3v13a2 2 0 0 1 2-2h8V4Z"/></symbol>
+  <symbol id="i-link" viewBox="0 0 24 24"><path d="M10 14a4 4 0 0 0 5.7 0l3-3a4 4 0 0 0-5.7-5.7l-1 1"/><path d="M14 10a4 4 0 0 0-5.7 0l-3 3a4 4 0 0 0 5.7 5.7l1-1"/></symbol>
+  <symbol id="i-play" viewBox="0 0 24 24"><path d="M7 4v16l13-8L7 4Z"/></symbol>
+  <symbol id="i-up" viewBox="0 0 24 24"><path d="M12 19V5M5 12l7-7 7 7"/></symbol>
+  <symbol id="i-map" viewBox="0 0 24 24"><path d="M12 22s7-6.5 7-12a7 7 0 0 0-14 0c0 5.5 7 12 7 12Z"/><circle cx="12" cy="10" r="2.5"/></symbol>
+  <symbol id="i-scale" viewBox="0 0 24 24"><path d="M12 3v18M4 7h16M6 7l-3 7a3 3 0 0 0 6 0L6 7ZM18 7l-3 7a3 3 0 0 0 6 0l-3-7Z"/></symbol>
+  <symbol id="i-lab" viewBox="0 0 24 24"><path d="M9 3h6M10 3v6L4 20a1 1 0 0 0 1 1h14a1 1 0 0 0 1-1L14 9V3"/><path d="M7 15h10"/></symbol>
+  <symbol id="i-spark" viewBox="0 0 24 24"><path d="M12 3v4M12 17v4M3 12h4M17 12h4M6 6l2.5 2.5M15.5 15.5 18 18M18 6l-2.5 2.5M8.5 15.5 6 18"/></symbol>
+  <symbol id="i-bulb" viewBox="0 0 24 24"><path d="M9 18h6M10 21h4M8 13a5 5 0 1 1 8 0c-1 1-1.5 2-1.5 3h-5c0-1-.5-2-1.5-3Z"/></symbol>
+  <symbol id="i-radio" viewBox="0 0 24 24"><circle cx="12" cy="12" r="2"/><path d="M8.5 8.5a5 5 0 0 0 0 7M15.5 8.5a5 5 0 0 1 0 7M5.6 5.6a9 9 0 0 0 0 12.8M18.4 5.6a9 9 0 0 1 0 12.8"/></symbol>
+  <symbol id="i-list" viewBox="0 0 24 24"><path d="M8 6h13M8 12h13M8 18h13M3 6h.01M3 12h.01M3 18h.01"/></symbol>
+</svg>
+<div class="progress" id="progress" aria-hidden="true"></div>
+<nav class="rail" id="rail" aria-label="Section progress"></nav>
+<button class="totop" id="totop" aria-label="Back to top"><svg class="ico"><use href="#i-up"/></svg></button>
 <nav class="nav" id="nav">
   <a class="brand" href="#top">FLY // DRONE</a>
   <button class="menu-btn" id="menu-btn" aria-expanded="false" aria-controls="nav-list"><i></i>Menu</button>
@@ -33,6 +67,7 @@
     <li><a class="link" href="#twobrains">Two brains</a></li>
     <li><a class="link" href="#stress">Stress test</a></li>
     <li><a class="link" href="#meaning">Meaning</a></li>
+    <li><a class="link" href="#links">Links</a></li>
     <li><a class="link" href="#sources">Sources</a></li>
   </ul>
 </nav>
@@ -63,6 +98,14 @@
   <div class="scroll-cue">Scroll</div>
 </header>
 
+<!-- ===================== CONTENTS ===================== -->
+<section class="block tight" id="contents" style="padding-top:3rem">
+  <div class="wrap">
+    <div class="eyebrow"><span class="label">Contents · sixteen short chapters</span></div>
+    <div class="chapters" id="chapters"></div>
+  </div>
+</section>
+
 <!-- ===================== IDEA ===================== -->
 <section class="block" id="idea">
   <div class="wrap">
@@ -76,6 +119,16 @@
         <p>A second team then turned that wiring diagram into a working simulation. Each neuron is a tiny "leaky integrate-and-fire" unit: it collects charge from its inputs, leaks a little, and fires when it crosses a threshold. The rules are simple and identical for every cell. The only thing that makes one fly brain different from a random network of the same size is <em>which neuron is wired to which</em>.</p>
         <p>That raised a question we could actually test. A fruit fly avoids collisions and holds a steady heading using visual circuits that neuroscientists have studied for decades. If the wiring diagram really captures those circuits, then feeding a simulated threat into the fly's looming detectors should produce a steering signal in its command neurons, on the correct side, with no learning at all. We gave that signal to a quadcopter and watched.</p>
       </div>
+    </div>
+    <div class="fig-grid two reveal" style="margin-top:2.5rem">
+      <figure class="figure" style="margin:0">
+        <img src="img/ext/nih-brain.jpg" alt="3D rendering of all 140,000 neurons in the fruit fly brain, colour-coded by neuron" loading="lazy" width="1000" height="600">
+        <div class="cap">Every neuron of the FlyWire brain, rendered from the same dataset this experiment runs. The two side lobes are the optic lobes; the centre is where the command neurons live.<span class="credit">Data: FlyWire.ai · Rendering: Philipp Schlegel, University of Cambridge / MRC LMB · via NIH Research Matters</span></div>
+      </figure>
+      <figure class="figure vignette" style="margin:0">
+        <img src="img/ext/nih-fly.jpg" alt="Translucent fruit fly with its brain highlighted in pink inside the head" loading="lazy" width="800" height="400">
+        <div class="cap">Where it sits: the brain, in pink, inside a fly about three millimetres long.<span class="credit">Amy Sterling / FlyWire / Princeton University · via NIH Research Matters</span></div>
+      </figure>
     </div>
     <div class="grid-3 reveal">
       <div class="cell"><div class="num">1</div><h3>Eyes</h3><p>A virtual object approaches. Its growth on the retina is converted into spikes in the fly's own looming-detector neurons, LPLC2 and LC4, on the side of the eye that sees it.</p></div>
@@ -135,6 +188,23 @@
         <div class="stats" style="animation:none;opacity:1;margin-top:1.6rem;max-width:none">
           <div class="stat"><b data-fill="p1_dn_left">92</b><span class="label">command neurons recruited by left-eye looming</span></div>
           <div class="stat"><b data-fill="p1_dn_total">1,299</b><span class="label">command neurons monitored</span></div>
+        </div>
+        <div class="diagram reveal" style="margin-top:1.4rem">
+          <svg viewBox="0 0 560 190" role="img" aria-label="A threat seen by the left eye activates steering neurons on the right and saccade neurons on the left; both mean turn right">
+            <defs><marker id="arr" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto"><path d="M0 0 10 5 0 10Z" fill="#a5a5a5"/></marker></defs>
+            <text x="60" y="22" fill="#a5a5a5" font-size="10" letter-spacing="2" text-anchor="middle">THREAT</text>
+            <circle cx="60" cy="60" r="18" fill="none" stroke="#ffffff" stroke-width="1.5"/><circle cx="60" cy="60" r="8" fill="rgba(255,255,255,.15)"/>
+            <path d="M84 70 L150 92" stroke="#2e9fbf" stroke-width="2" marker-end="url(#arr)"/>
+            <ellipse cx="200" cy="100" rx="44" ry="34" fill="#171717" stroke="#2a2a2a"/>
+            <ellipse cx="170" cy="100" rx="12" ry="18" fill="rgba(46,159,191,.35)" stroke="#2e9fbf"/><ellipse cx="230" cy="100" rx="12" ry="18" fill="#141414" stroke="#3a3a3a"/>
+            <text x="170" y="145" fill="#2e9fbf" font-size="9" text-anchor="middle" letter-spacing="1.5">LEFT EYE</text><text x="230" y="145" fill="#6f6f6f" font-size="9" text-anchor="middle" letter-spacing="1.5">RIGHT EYE</text>
+            <path d="M246 92 L330 60" stroke="#d4652f" stroke-width="2" marker-end="url(#arr)"/><path d="M246 108 L330 138" stroke="#2e9fbf" stroke-width="2" marker-end="url(#arr)"/>
+            <rect x="335" y="40" width="120" height="40" rx="5" fill="rgba(212,101,47,.12)" stroke="#d4652f"/><text x="395" y="57" fill="#ffffff" font-size="10" text-anchor="middle" font-weight="600">RIGHT DNa02 · DNa01 · DNb01</text><text x="395" y="71" fill="#a5a5a5" font-size="9" text-anchor="middle">steering neurons, fire on the far side</text>
+            <rect x="335" y="118" width="120" height="40" rx="5" fill="rgba(46,159,191,.12)" stroke="#2e9fbf"/><text x="395" y="135" fill="#ffffff" font-size="10" text-anchor="middle" font-weight="600">LEFT DNp11 · DNp03</text><text x="395" y="149" fill="#a5a5a5" font-size="9" text-anchor="middle">saccade neurons, fire on the near side</text>
+            <path d="M460 60 L500 95 M460 138 L500 103" stroke="#a5a5a5" stroke-width="1.5" marker-end="url(#arr)"/>
+            <text x="530" y="93" fill="#e63946" font-size="20" font-family="Bebas Neue, sans-serif" text-anchor="middle">TURN</text><text x="530" y="113" fill="#e63946" font-size="20" font-family="Bebas Neue, sans-serif" text-anchor="middle">RIGHT</text>
+          </svg>
+          <div class="cap">Two different command pathways, one meaning. In a fly, steering neurons push toward their own side and saccade neurons push away from theirs, so a left-side threat recruits exactly the cells that turn the animal right.</div>
         </div>
       </div>
       <div class="panel reveal">
@@ -275,6 +345,10 @@
         <p class="lede">The fair test is a brain that is identical in every way except the one thing FlyWire measured: who connects to whom.</p>
         <p>We kept all 138,639 neurons, every neuron's transmitter sign, every synapse and its strength, and re-pointed each connection at a random target, which leaves every neuron with the same number of inputs and outputs. Then we ran the exact same flights. The shuffled brains were just as active as the real one, often more so. They simply did not steer. In this first pass with two shuffled brains, three of four looming runs ended in a collision, the fourth turned by chance, and neither corrected the yaw disturbance.</p>
         <p>The stress test further down repeats this at scale: three shuffled brains and sixty flights gave fifty collisions, and the ten that cleared all came from one shuffle that only ever turned one way, whichever side the threat came from. A second control there, the real brain read out through randomly chosen command neurons, behaved the same way.</p>
+        <div class="diagram reveal" style="margin-top:1.4rem;padding:0">
+          <canvas id="shuffle-diagram"></canvas>
+          <div class="cap" style="padding:.7rem 1rem 1rem">Toy sketch of the control. Every dot keeps its colour, its number of connections and its transmitter; only who it talks to is randomised.</div>
+        </div>
         <div class="scroll-x" style="margin-top:1.4rem">
           <table class="data" id="control-table"></table>
         </div>
@@ -295,6 +369,21 @@
           <p>An object rushing at you expands in every direction at once. A world sliding past because you are turning moves in one direction. We gave the left eye each pattern and watched what the wiring did with it.</p>
           <p>Only the all-directions pattern woke the looming detector LPLC2 and the giant fiber. Single-direction motion left both silent and instead drove the steering neuron DNa02 hard on the same side. Nobody wrote a looming detector. The connectome contains one, and it contains a separate channel for "I am rotating", fed by the same motion cells. Both brains do this.</p>
         </div>
+        <div class="diagram reveal" style="margin-top:1.4rem">
+          <svg viewBox="0 0 560 200" role="img" aria-label="Expansion in all directions activates the looming detector and giant fiber; motion in one direction activates the steering neuron instead">
+            <defs><marker id="arr2" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="6" markerHeight="6" orient="auto"><path d="M0 0 10 5 0 10Z" fill="#2e9fbf"/></marker></defs>
+            <g transform="translate(110 92)"><circle r="62" fill="#151515" stroke="#2a2a2a"/><circle r="6" fill="#ffffff"/>
+              <g stroke="#2e9fbf" stroke-width="2" marker-end="url(#arr2)"><path d="M0-14V-48"/><path d="M0 14V48"/><path d="M-14 0H-48"/><path d="M14 0H48"/><path d="M-10-10-34-34"/><path d="M10-10 34-34"/><path d="M-10 10-34 34"/><path d="M10 10 34 34"/></g></g>
+            <text x="110" y="180" fill="#ffffff" font-size="11" text-anchor="middle" font-weight="600">EXPANSION · all four directions at once</text>
+            <text x="110" y="194" fill="#e63946" font-size="10" text-anchor="middle">→ LPLC2 looming detector + giant fiber</text>
+            <g transform="translate(400 92)"><circle r="62" fill="#151515" stroke="#2a2a2a"/>
+              <g stroke="#2e9fbf" stroke-width="2" marker-end="url(#arr2)"><path d="M-40-32H0"/><path d="M-40-16H8"/><path d="M-40 0H16"/><path d="M-40 16H8"/><path d="M-40 32H0"/></g></g>
+            <text x="400" y="180" fill="#ffffff" font-size="11" text-anchor="middle" font-weight="600">ROTATION · everything slides one way</text>
+            <text x="400" y="194" fill="#d4652f" font-size="10" text-anchor="middle">→ DNa02 steering neuron, same side</text>
+            <path d="M212 92h116" stroke="#2a2a2a" stroke-dasharray="3 5"/><text x="270" y="86" fill="#6f6f6f" font-size="9" text-anchor="middle" letter-spacing="2">SAME T4 / T5 CELLS</text>
+          </svg>
+          <div class="cap">The only difference between the two inputs is the pattern of directions. The wiring sorts them into "escape" and "keep heading".</div>
+        </div>
       </div>
       <div class="panel reveal">
         <div class="head"><span class="t">Left-eye motion pattern → firing rate, Hz</span></div>
@@ -314,6 +403,16 @@
     <div class="eyebrow"><span class="label">10 · Two brains, one reflex</span></div>
     <h2 class="title">Does a second fly agree?</h2>
     <p class="lede">FlyWire is one female fly. In June 2026 a second team published MaleCNS: a complete male fly, brain <em>and</em> nerve cord, reconstructed independently. We ran the same simulation on it. If the reflex is real biology and not a quirk of one specimen, it should be there too. Spin the brains, then read the numbers.</p>
+    <div class="fig-grid two reveal" style="margin-top:2rem">
+      <figure class="figure" style="margin:0">
+        <img src="img/ext/janelia-malecns-dark.jpg" alt="Rendering of the male fruit fly central nervous system: brain with optic lobes, neck connective and ventral nerve cord" loading="lazy" width="1200" height="675">
+        <div class="cap">The MaleCNS dataset: brain, neck and nerve cord in one reconstruction, 166,691 neurons in 11,691 types. Everything below the neck is what FlyWire could not give us.<span class="credit">FlyEM Project Team, HHMI Janelia · Cambridge Connectomics Group · Google Research · dataset CC BY 4.0 · background darkened for this page</span></div>
+      </figure>
+      <div class="video" style="align-self:start">
+        <div class="frame" data-yt="TQ0T4C7noMo" data-title="Example visual-motor pathway in the fruit fly"><img alt="Video poster: a visual-motor pathway through the fly nervous system" loading="lazy"><div class="play"><svg class="ico"><use href="#i-play"/></svg></div></div>
+        <div class="meta"><b>Eye to muscle, traced through the real data</b><span>Janelia's own animation follows one pathway from the R1–R6 photoreceptors to a motor neuron, the same kind of route our escape signal takes. Video by Philip Hubbard and Alexandra Fragniere, HHMI Janelia.</span></div>
+      </div>
+    </div>
     <div class="panel reveal" style="margin-top:2rem">
       <div class="head">
         <div class="seg" id="brain3d-seg" role="group" aria-label="which brain"><button aria-pressed="true" data-brain="fw">FlyWire · female brain</button><button aria-pressed="false" data-brain="mc">MaleCNS · male brain + nerve cord</button></div>
@@ -389,6 +488,21 @@
       <div class="finding"><h3>Hardware in the loop</h3><p>A 65 mm whoop running Betaflight in angle mode, which is the autopilot used here. Its analog camera streams to the PC; the PC sends roll, yaw and thrust setpoints at 50 Hz through an ELRS transmitter. Flights inside a net, on a light tether, with a physical disarm switch. Gate: hover, then a hand-swung ball.</p></div>
       <div class="finding"><h3>Preregistered trials</h3><p>Twenty swings per condition from left, right and centre, with no-brain and shuffled-brain controls, predictions committed before the first flight, and an overhead camera measuring closest approach the same way the simulation does.</p></div>
     </div>
+    <div class="diagram reveal" style="margin-top:1.4rem">
+      <svg viewBox="0 0 720 150" role="img" aria-label="Hardware loop: the whoop's camera streams to the PC, the fly brain runs on the PC, commands go back by radio to the whoop's flight controller">
+        <defs><marker id="arr3" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="6" markerHeight="6" orient="auto"><path d="M0 0 10 5 0 10Z" fill="#a5a5a5"/></marker></defs>
+        <g font-size="10" fill="#a5a5a5" text-anchor="middle">
+          <g transform="translate(70 40)"><rect x="-40" y="-26" width="80" height="52" rx="8" fill="#171717" stroke="#2a2a2a"/><svg x="-12" y="-14" width="24" height="24" class="ico" style="color:#ffffff"><use href="#i-drone"/></svg></g><text x="70" y="90" fill="#ffffff" font-weight="600">65 mm whoop</text><text x="70" y="104">Betaflight, angle mode</text>
+          <g transform="translate(230 40)"><rect x="-40" y="-26" width="80" height="52" rx="8" fill="#171717" stroke="#2a2a2a"/><svg x="-12" y="-14" width="24" height="24" class="ico" style="color:#7fd3ea"><use href="#i-camera"/></svg></g><text x="230" y="90" fill="#ffffff" font-weight="600">Analog video, 5.8 GHz</text><text x="230" y="104">~50 ms to the PC</text>
+          <g transform="translate(390 40)"><rect x="-40" y="-26" width="80" height="52" rx="8" fill="rgba(230,57,70,.12)" stroke="#e63946"/><svg x="-12" y="-14" width="24" height="24" class="ico" style="color:#ff8e99"><use href="#i-brain"/></svg></g><text x="390" y="90" fill="#ffffff" font-weight="600">PC: retina + connectome</text><text x="390" y="104">flyvis eyes, LIF brain, bridge</text>
+          <g transform="translate(550 40)"><rect x="-40" y="-26" width="80" height="52" rx="8" fill="#171717" stroke="#2a2a2a"/><svg x="-12" y="-14" width="24" height="24" class="ico" style="color:#e2b34a"><use href="#i-radio"/></svg></g><text x="550" y="90" fill="#ffffff" font-weight="600">ELRS link, 50 Hz</text><text x="550" y="104">roll · yaw · thrust setpoints</text>
+          <g transform="translate(680 40)"><rect x="-32" y="-26" width="64" height="52" rx="8" fill="#171717" stroke="#2a2a2a"/><svg x="-12" y="-14" width="24" height="24" class="ico" style="color:#9fb4f0"><use href="#i-shield"/></svg></g><text x="680" y="90" fill="#ffffff" font-weight="600">Net + disarm</text><text x="680" y="104">always has the last word</text>
+        </g>
+        <g stroke="#a5a5a5" stroke-width="1.5" marker-end="url(#arr3)"><path d="M112 40h76"/><path d="M272 40h76"/><path d="M432 40h76"/><path d="M592 40h54"/></g>
+        <path d="M550 66v60H70v-1" fill="none" stroke="#5a7ee0" stroke-width="1.5" stroke-dasharray="4 6"/><text x="310" y="140" fill="#5a7ee0" font-size="10" text-anchor="middle">commands back to the whoop's own flight controller, which keeps it level</text>
+      </svg>
+      <div class="cap">The loop, end to end. Roughly 100 ms from camera to motor, which is about the fly's own reaction time to a looming object.</div>
+    </div>
   </div>
 </section>
 
@@ -423,6 +537,15 @@
   <div class="wrap">
     <div class="eyebrow"><span class="label">14 · Method &amp; notation</span></div>
     <h2 class="title">The numbers behind the pictures</h2>
+    <div class="stepper reveal">
+      <div class="step"><b>0</b><span>Reproduce the published sugar-to-feeding example. Model verified on this machine.</span></div>
+      <div class="step"><b>1</b><span>Open-loop looming: which command neurons fire, on which side.</span></div>
+      <div class="step"><b>2</b><span>Stepping wrapper: run the brain 20 ms at a time with live inputs.</span></div>
+      <div class="step"><b>3</b><span>Quadcopter + retina + bridge. First dodge, first heading hold.</span></div>
+      <div class="step"><b>4</b><span>Shuffled-wiring control. Write-up published.</span></div>
+      <div class="step"><b>5</b><span>Statistics, ablations, motion-driven looming, sweeps, cruise tests.</span></div>
+      <div class="step"><b>6</b><span>MaleCNS replication with descending-neuron and motor-neuron read-outs.</span></div>
+    </div>
     <div class="grid-2" style="margin-top:2rem">
       <div class="reveal">
         <div class="scroll-x"><table class="data">
@@ -464,11 +587,39 @@
   </div>
 </section>
 
+<!-- ===================== RELEVANT LINKS ===================== -->
+<section class="block" id="links">
+  <div class="wrap">
+    <div class="eyebrow"><span class="label">15 · Relevant links</span></div>
+    <h2 class="title">Go to the source</h2>
+    <p class="lede">The people who built these datasets explain them far better than we can. Start here.</p>
+    <div class="links reveal">
+      <a class="linkcard" href="https://flywire.ai/about" target="_blank" rel="noopener"><div class="thumb"><img src="img/ext/flywire-connectome-dark.jpg" alt="" loading="lazy"></div><div><b>FlyWire: about the project</b><span>The human-AI collaboration, 127 institutions strong, that reconstructed the whole female fly brain. Codex, tools, citation guidelines.</span><em>flywire.ai</em></div></a>
+      <a class="linkcard" href="https://www.janelia.org/project-team/flyem/male-cns-connectome" target="_blank" rel="noopener"><div class="thumb"><img src="img/ext/janelia-malecns-dark.jpg" alt="" loading="lazy"></div><div><b>MaleCNS connectome, HHMI Janelia</b><span>The male central nervous system, brain and nerve cord, with downloads, neuPrint access and the videos below.</span><em>janelia.org</em></div></a>
+      <a class="linkcard" href="https://www.nih.gov/news-events/nih-research-matters/complete-wiring-map-adult-fruit-fly-brain" target="_blank" rel="noopener"><div class="thumb"><img src="img/ext/nih-brain.jpg" alt="" loading="lazy"></div><div><b>NIH Research Matters: the complete wiring map</b><span>A plain-language summary of the October 2024 Nature papers, with the numbers and why they matter.</span><em>nih.gov · 22 October 2024</em></div></a>
+      <a class="linkcard" href="https://www.science.org/content/article/complete-map-fruit-fly-brain-circuitry-unveiled" target="_blank" rel="noopener"><div class="thumb"><svg class="ico" style="width:34px;height:34px;color:#a5a5a5"><use href="#i-book"/></svg></div><div><b>Science: complete map of fruit fly brain circuitry unveiled</b><span>News coverage of the FlyWire release from the journal Science.</span><em>science.org</em></div></a>
+    </div>
+    <div class="videos reveal">
+      <div class="video"><div class="frame" data-yt="1pggsnH8eJg" data-title="Welcome to FlyWire"><img alt="Video poster: Welcome to FlyWire" loading="lazy"><div class="play"><svg class="ico"><use href="#i-play"/></svg></div></div><div class="meta"><b>Welcome to FlyWire</b><span>How a whole brain gets traced, from electron microscope slices to a proofread wiring diagram. FlyWire, Princeton.</span></div></div>
+      <div class="video"><div class="frame" data-yt="nRNcRZGC_TE" data-title="FlyWire data types overview"><img alt="Video poster: FlyWire data types overview" loading="lazy"><div class="play"><svg class="ico"><use href="#i-play"/></svg></div></div><div class="meta"><b>FlyWire data types</b><span>What the released data contains: neurons, synapses, cell types, transmitters. FlyWire, Princeton.</span></div></div>
+      <div class="video"><div class="frame" data-yt="NFeNxwjzueg" data-title="Male fruit fly CNS cell types"><img alt="Video poster: all cell types of the male fly central nervous system" loading="lazy"><div class="play"><svg class="ico"><use href="#i-play"/></svg></div></div><div class="meta"><b>Every cell type in the male CNS</b><span>All 11,691 neuron types of the male brain and nerve cord in one animation. Video by Philip Hubbard, HHMI Janelia.</span></div></div>
+      <div class="video"><div class="frame" data-yt="TQ0T4C7noMo" data-title="Example visual-motor pathway in the fruit fly"><img alt="Video poster: a visual-motor pathway" loading="lazy"><div class="play"><svg class="ico"><use href="#i-play"/></svg></div></div><div class="meta"><b>A visual-motor pathway</b><span>From photoreceptors to a motor neuron through the real wiring. Video by Philip Hubbard and Alexandra Fragniere, HHMI Janelia.</span></div></div>
+      <div class="video"><div class="frame" data-yt="mNV_ypFXKwg" data-title="Sexual dimorphism in the fruit fly central nervous system"><img alt="Video poster: dimorphic neurons compared between male and female" loading="lazy"><div class="play"><svg class="ico"><use href="#i-play"/></svg></div></div><div class="meta"><b>Male versus female wiring</b><span>One neuron type compared across the two connectomes we use, and why some differences are expected. Video by Philip Hubbard and Isabella Beckett, HHMI Janelia.</span></div></div>
+    </div>
+    <p class="muted" style="font-size:.78rem;margin-top:1.2rem">Videos play from YouTube when you press play; nothing loads until then. Images on this page from FlyWire, Janelia and NIH are credited in their captions; the two Janelia renders were placed on a dark background for this page and are otherwise unaltered.</p>
+  </div>
+</section>
+
 <!-- ===================== SOURCES ===================== -->
 <section class="block" id="sources">
   <div class="wrap">
-    <div class="eyebrow"><span class="label">15 · Sources</span></div>
+    <div class="eyebrow"><span class="label">16 · Sources</span></div>
     <h2 class="title">Standing on a lot of shoulders</h2>
+    <div class="grid-3 reveal" style="margin-top:1.6rem">
+      <div class="cell"><div class="ico-badge teal"><svg class="ico"><use href="#i-eye"/></svg></div><h3>FlyWire v783</h3><p>The female brain: 138,639 neurons, 15.1 M connections, 54.5 M synapses. Positions, types and sides from the Schlegel et al. annotations.</p></div>
+      <div class="cell"><div class="ico-badge amber"><svg class="ico"><use href="#i-layers"/></svg></div><h3>MaleCNS v1.0</h3><p>The male brain plus nerve cord: 165,122 traced neurons, 15.3 M connections at two synapses or more, wing motor neurons included.</p></div>
+      <div class="cell"><div class="ico-badge red"><svg class="ico"><use href="#i-bolt"/></svg></div><h3>Shiu et al. model</h3><p>One leaky integrate-and-fire rule for every neuron, one synaptic weight scaled by synapse count, signs from predicted transmitters. Unchanged here.</p></div>
+    </div>
     <div class="grid-2" style="margin-top:2rem">
       <div class="reveal">
         <h3 class="label" style="margin-bottom:1rem">Data and model</h3>
@@ -482,7 +633,7 @@
           <li>Lappalainen, J. K. et al. <a href="https://www.nature.com/articles/s41586-024-07939-3">Connectome-constrained networks predict neural activity across the fly visual system.</a> <i>Nature</i> 634, 1132–1140 (2024). The pixel-based retina planned for the real-drone stage.</li>
         </ol>
         <h3 class="label" style="margin:1.6rem 0 1rem">Prior attempts we learned from</h3>
-        <ol class="sources" start="6">
+        <ol class="sources" start="8">
           <li><a href="https://github.com/SpikeCalls/FlyDrones">FlyDrones</a> — camera → visual neurons → spiking MaleCNS connectome → descending neurons → real drone. The closest prior pipeline; its authors were candid that the retina and read-out were engineered.</li>
           <li><a href="https://github.com/CC834/flywire-drone-brain">flywire-drone-brain</a> — backend benchmarks of the same Shiu model on FlyWire v783.</li>
           <li><a href="https://eon.systems/updates/embodied-brain-emulation">Eon Systems, embodied fly</a> — looming input reaches escape neurons in the Shiu model; body coupling left open.</li>
@@ -491,7 +642,7 @@
       </div>
       <div class="reveal">
         <h3 class="label" style="margin-bottom:1rem">The biology behind the read-out signs</h3>
-        <ol class="sources" start="10">
+        <ol class="sources" start="12">
           <li>Klapoetke, N. C. et al. <a href="https://www.nature.com/articles/nature24626">Ultra-selective looming detection from radial motion opponency.</a> <i>Nature</i> 551, 237–241 (2017). LPLC2.</li>
           <li>Ache, J. M. et al. <a href="https://doi.org/10.1016/j.neuron.2019.04.028">Neural basis for looming size and velocity encoding in the Drosophila giant fiber escape pathway.</a> <i>Curr. Biol.</i> 29, 1073–1081 (2019). LC4 and LPLC2 onto the giant fiber.</li>
           <li>von Reyn, C. R. et al. <a href="https://doi.org/10.1038/nn.3741">A spike-timing mechanism for action selection.</a> <i>Nat. Neurosci.</i> 17, 962–970 (2014). Giant fiber escape.</li>
@@ -534,5 +685,6 @@
 <script src="https://cdnjs.cloudflare.com/ajax/libs/three.js/r128/three.min.js"></script>
 <script src="app.js"></script>
 <script src="app2.js"></script>
+<script src="app3.js"></script>
 </body>
 </html>
