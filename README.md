@@ -3,7 +3,7 @@
 The complete wiring diagram of a fruit fly brain (FlyWire v783, 138,639 neurons, 54 million synapses), run as a spiking
 leaky integrate-and-fire network with the Shiu et al. (2024) model, wired to a simulated quadcopter. No parameters are
 trained. Fed a looming object through its own looming-detector neurons, the connectome steers the drone away from the
-threat; fed rotational optic flow, it damps a yaw disturbance. Shuffling the synaptic targets destroys both behaviours.
+threat; fed rotational optic flow, it damps a yaw disturbance. Shuffling the synaptic targets destroys both behaviors.
 
 **Live write-up:** see the URL in the latest commit message or `site/` deployed on Vercel.
 

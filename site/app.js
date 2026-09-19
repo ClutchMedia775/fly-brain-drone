@@ -234,7 +234,7 @@
     function caption() {
       const d = run(); const c = { real: 'the real FlyWire wiring', nobrain: 'no brain in the loop (the drone only holds altitude)', shuffle1: 'the same neurons with randomly re-targeted synapses' }[cond];
       const bearing = { 30: 'from the left', '-30': 'from the right', 0: 'head-on' }[az];
-      $('#lab-cap').textContent = `Sphere approaching ${bearing} with ${c}. Closest approach ${d.min_dist.toFixed(2)} m` + (d.min_dist < 0.3 ? ' — collision.' : ' — cleared.') + (act() ? ' Brain panel shows every neuron that spiked in the current 20 ms tick, coloured by region: teal = optic lobe, cyan = visual projection, white = central brain, red = descending.' : ' No per-neuron recording for this run; the brain panel shows the recorded left-bearing run for this condition.');
+      $('#lab-cap').textContent = `Sphere approaching ${bearing} with ${c}. Closest approach ${d.min_dist.toFixed(2)} m` + (d.min_dist < 0.3 ? ' — collision.' : ' — cleared.') + (act() ? ' Brain panel shows every neuron that spiked in the current 20 ms tick, colored by region: teal = optic lobe, cyan = visual projection, white = central brain, red = descending.' : ' No per-neuron recording for this run; the brain panel shows the recorded left-bearing run for this condition.');
       $$('#lab-az button').forEach(b => b.disabled = cond.startsWith('shuffle') && b.dataset.az === '0');
     }
     function drawFlight() {
@@ -295,7 +295,7 @@
     const L = FB.loom; const rows = [['30', 'From left'], ['-30', 'From right'], ['0', 'Head-on']];
     const series = [['nobrain', 'no brain', C.nobrain], ['real', 'fly brain', C.real], ['shuffle1', 'shuffled #1', C.shuffle], ['shuffle2', 'shuffled #2', C.shuffle2]];
     const W = 560, rowH = 78, padL = 90, padR = 40, H = rows.length * rowH + 40, max = 2.6, sc = v => v / max * (W - padL - padR);
-    const svg = el('svg', { viewBox: `0 0 ${W} ${H}`, class: 'chart', role: 'img', 'aria-label': 'Closest approach in metres by threat bearing and brain condition' });
+    const svg = el('svg', { viewBox: `0 0 ${W} ${H}`, class: 'chart', role: 'img', 'aria-label': 'Closest approach in meters by threat bearing and brain condition' });
     const g = el('g', { class: 'grid' }, svg);
     [0.5, 1, 1.5, 2, 2.5].forEach(v => { el('line', { x1: padL + sc(v), y1: 10, x2: padL + sc(v), y2: H - 22 }, g); const t = el('text', { x: padL + sc(v), y: H - 8, 'text-anchor': 'middle', style: 'font-size:9px' }, svg); t.textContent = v + ' m'; });
     el('line', { x1: padL + sc(0.3), y1: 10, x2: padL + sc(0.3), y2: H - 22, stroke: '#555', 'stroke-dasharray': '3 4' }, svg);
@@ -371,6 +371,6 @@
       `<td class="num">${O[k] ? O[k].total_yaw.toFixed(0) + '°' : '—'}</td><td class="num">${O[k] ? fmt(Math.max(...O[k].nact)) : '—'}</td></tr>`;
     tb.innerHTML = `<tr><th>Brain</th><th class="num">Closest, left threat</th><th class="num">Closest, right threat</th><th class="num">Yaw drift</th><th class="num">Peak neurons active</th></tr>` +
       row('No brain', 'nobrain', C.nobrain) + row('Real wiring', 'real', C.real) + row('Shuffled #1', 'shuffle1', C.shuffle) + row('Shuffled #2', 'shuffle2', C.shuffle2) +
-      `<tr><td colspan="5" class="muted" style="font-size:.78rem">Distances in metres; ✕ marks a collision (closer than the 0.3 m sphere radius). Yaw drift is the heading 1.5 s after the disturbance ends. Peak neurons active is during the optomotor run.</td></tr>`;
+      `<tr><td colspan="5" class="muted" style="font-size:.78rem">Distances in meters; ✕ marks a collision (closer than the 0.3 m sphere radius). Yaw drift is the heading 1.5 s after the disturbance ends. Peak neurons active is during the optomotor run.</td></tr>`;
   })();
 })();
